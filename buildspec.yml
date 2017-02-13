@@ -3,10 +3,7 @@ phases:
   build:
     commands:
       - echo "hello, hell"
-      - pip install -U pip
-      - echo "_____________"
-      - env
-      - echo "^^^^^^^^^^^^^"
+      - pip install git+ssh://git@github.com/cgauge/mailexpress-utils.git@settings-refactoring#egg=cgmailexpressutils
 
 artifacts:
   type: zip
