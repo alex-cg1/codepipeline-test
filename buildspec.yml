@@ -2,7 +2,9 @@ version: 0.1
 phases:
   build:
     commands:
-      echo "hello, hell"
+      - echo "hello, hell"
+      - env
+      - echo "end of env"
 
 artifacts:
   type: zip
