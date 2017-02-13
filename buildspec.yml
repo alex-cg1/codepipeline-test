@@ -1,0 +1,10 @@
+version: 0.1
+phases:
+  build:
+    commands:
+      echo "hello, hell"
+
+artifacts:
+  type: zip
+  files:
+    - program.py
