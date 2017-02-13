@@ -2,8 +2,7 @@ version: 0.1
 phases:
   build:
     commands:
-      - echo "hello, hell"
-      - pip install git+https://github.com/cgauge/mailexpress-utils.git#egg=cgmailexpressutils
+      - echo "hello, hell----------" && env && echo "^^^^^^^^^^^^^^^"
 
 artifacts:
   type: zip
