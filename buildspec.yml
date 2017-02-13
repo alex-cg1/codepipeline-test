@@ -3,8 +3,10 @@ phases:
   build:
     commands:
       - echo "hello, hell"
+      - pip install -U pip
+      - echo "_____________"
       - env
-      - echo "end of env"
+      - echo "^^^^^^^^^^^^^"
 
 artifacts:
   type: zip
