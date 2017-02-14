@@ -1,0 +1,2 @@
+# fake dependency from private repo to test deployment tokens
+git+ssh://git@github.com/cgauge/mailexpress-utils.git
