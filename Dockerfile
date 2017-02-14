@@ -6,8 +6,8 @@ ENV PROJECT_ROOT /srv/codepipeline-test
 
 COPY * ${PROJECT_ROOT}/
 
-RUN    yum -y update                     \
-    && yum -y install python-devel       \
+# TODO:    yum -y update
+RUN    yum -y install python-devel       \
                       python-setuptools  \
                       git                \
     && easy_install pip==9.0.1           \
