@@ -1,4 +1,9 @@
 version: 0.1
+
+environment_variables:
+  plaintext:
+    GITHUB_DEPLOY_TOKEN: "$GITHUB_DEPLOY_TOKEN"
+
 phases:
   build:
     commands:
