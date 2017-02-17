@@ -6,4 +6,4 @@ from bottle import route, run, template
 def index(name):
     return template('<b>I hate people</b>!', name=name)
 
-run(host='localhost', port=8000)
+run(host='0.0.0.0', port=8000)
