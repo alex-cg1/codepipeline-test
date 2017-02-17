@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION)
-      - date +%F_%H_%M > _timestamp
+      - date date +%y.%j_%H:%M > _timestamp
   build:
     commands:
       - env
