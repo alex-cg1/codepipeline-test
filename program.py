@@ -1,15 +1,9 @@
 #!/usr/bin/env python2
 
-print("I hate people")
+from bottle import route, run, template
 
-import SimpleHTTPServer
-import SocketServer
+@route('/')
+def index(name):
+    return template('<b>I hate people</b>!', name=name)
 
-PORT = 8000
-
-Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-
-httpd = SocketServer.TCPServer(("", PORT), Handler)
-
-print "serving at port", PORT
-httpd.serve_forever()
+run(host='localhost', port=8000)
