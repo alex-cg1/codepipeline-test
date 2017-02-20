@@ -1,4 +1,4 @@
-FROM 240443233507.dkr.ecr.eu-central-1.amazonaws.com/centos7cg
+FROM 240443233507.dkr.ecr.eu-west-1.amazonaws.com/centos7cg
 
 ARG GITHUB_DEPLOY_TOKEN
 
