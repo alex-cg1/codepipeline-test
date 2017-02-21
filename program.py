@@ -4,6 +4,6 @@ from bottle import route, run, template
 
 @route('/')
 def index():
-    return "<b>Hi there.</b>"
+    return "<b>In MailExpress we trust.</b>"
 
 run(host='0.0.0.0', port=8000)
