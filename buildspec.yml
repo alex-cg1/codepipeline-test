@@ -21,9 +21,9 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$(cat _tag)
       - echo "Generating change set"
-      - aws cloudformation create-change-set --stack-name codepipeline-demo --change-set-name UpdateService --use-previous-template --parameters ParameterKey=ImageTag,ParameterValue=$(cat _tag) --change-set-type UPDATE
+      - aws cloudformation create-change-set  --stack-name $STACK_NAME --change-set-name UpdateService --use-previous-template --parameters ParameterKey=ImageTag,ParameterValue=$(cat _tag) --change-set-type UPDATE
       - sleep 120
-      - aws cloudformation execute-change-set --stack-name codepipeline-demo --change-set-name UpdateService
+      - aws cloudformation execute-change-set --stack-name $STACK_NAME --change-set-name UpdateService
 artifacts:
   files:
     - "_tag"
