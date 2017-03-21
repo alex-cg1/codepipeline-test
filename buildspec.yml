@@ -20,6 +20,8 @@ phases:
       - echo "Pushing the Docker image..."
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$(cat _tag)
+      - echo "Deleting old/stall change set (if any)"
+      - aws cloudformation delete-change-set --change-set-name UpdateService --stack-name $STACK_NAME
       - echo "Generating change set"
       - aws cloudformation create-change-set
         --stack-name $STACK_NAME
@@ -29,6 +31,7 @@ phases:
         --change-set-type UPDATE
         --capabilities CAPABILITY_IAM
       - sleep 120
+      - echo "applying change set"
       - aws cloudformation execute-change-set
         --stack-name $STACK_NAME
         --change-set-name UpdateService
