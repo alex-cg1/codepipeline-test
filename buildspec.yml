@@ -1,5 +1,9 @@
 version: 0.1
 
+environment_variables:
+  plaintext:
+    CHANGE_SET_NAME: UpdateService
+
 phases:
   pre_build:
     commands:
@@ -21,20 +25,28 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$(cat _tag)
       - echo "Deleting old/stall change set (if any)"
-      - aws cloudformation delete-change-set --change-set-name UpdateService --stack-name $STACK_NAME
+      - aws cloudformation delete-change-set --change-set-name $CHANGE_SET_NAME --stack-name $STACK_NAME
       - echo "Generating change set"
       - aws cloudformation create-change-set
         --stack-name $STACK_NAME
-        --change-set-name UpdateService
+        --change-set-name $CHANGE_SET_NAME
         --use-previous-template
         --parameters ParameterKey=ImageTag,ParameterValue=$(cat _tag)
         --change-set-type UPDATE
         --capabilities CAPABILITY_IAM
       #- sleep 120
+      - for x in `seq 1 30`; do
+          status=$(aws cloudformation describe-change-set --change-set-name $CHANGE_SET_NAME --stack-name $STACK_NAME | jq .Status);
+          if [ '$status' = 'CREATE_COMPLETE' ];
+            then break;
+          fi;
+          echo "changeset is not ready yet ($status)";
+          sleep 5;
+        done
       - echo "applying change set"
       - aws cloudformation execute-change-set
         --stack-name $STACK_NAME
-        --change-set-name UpdateService
+        --change-set-name $CHANGE_SET_NAME
 #artifacts:
 #  files:
 #    - "_tag"
