@@ -30,11 +30,11 @@ phases:
         --parameters ParameterKey=ImageTag,ParameterValue=$(cat _tag)
         --change-set-type UPDATE
         --capabilities CAPABILITY_IAM
-#      - sleep 120
-#      - echo "applying change set"
-#      - aws cloudformation execute-change-set
-#        --stack-name $STACK_NAME
-#        --change-set-name UpdateService
-artifacts:
-  files:
-    - "_tag"
+      #- sleep 120
+      - echo "applying change set"
+      - aws cloudformation execute-change-set
+        --stack-name $STACK_NAME
+        --change-set-name UpdateService
+#artifacts:
+#  files:
+#    - "_tag"
