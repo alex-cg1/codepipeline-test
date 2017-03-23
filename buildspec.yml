@@ -38,7 +38,7 @@ phases:
       #- sleep 120
       - for x in `seq 1 30`; do
           status=$(aws cloudformation describe-change-set --change-set-name $CHANGE_SET_NAME --stack-name $STACK_NAME | jq .Status);
-          if [ '$status' = 'CREATE_COMPLETE' ];
+          if [ "$status" = 'CREATE_COMPLETE' ];
             then break;
           fi;
           echo "changeset is not ready yet ($status)";
