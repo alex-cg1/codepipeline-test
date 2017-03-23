@@ -57,7 +57,7 @@ phases:
       - images=$(aws ecr describe-images --repository-name test-alex-service-name) &&
         old_images=$(echo $images | jq ".imageDetails|sort_by(.imagePushedAt)|reverse|.[$MAX_IMAGES:]|.[]|select(.imagePushedAt<$(date +%s)-$MAX_IMAGE_AGE)|.imageDigest")  &&
         for digest in $old_images; do
-          echo aws ecr batch-delete-image --repository-name test-alex-service-name --image-ids imageDigest=$digest;
+          echo "TODO: run this command: aws ecr batch-delete-image --repository-name test-alex-service-name --image-ids imageDigest=$digest";
         done
 #artifacts:
 #  files:
