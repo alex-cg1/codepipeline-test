@@ -3,6 +3,10 @@ version: 0.1
 environment_variables:
   plaintext:
     CHANGE_SET_NAME: UpdateService
+    MAX_IMAGES: 3
+    #TODO MAX_IMAGES: 10
+    #TODO MAX_IMAGE_AGE: 3600*24*14
+    MAX_IMAGE_AGE: 7200
 
 phases:
   pre_build:
@@ -48,6 +52,13 @@ phases:
       - aws cloudformation execute-change-set
         --stack-name $STACK_NAME
         --change-set-name $CHANGE_SET_NAME
+      - echo "Deleting old images"
+      # TODO: split jq statement in a few smaller
+      - images=$(aws ecr describe-images --repository-name test-alex-service-name) &&
+        old_images=$(echo $images | jq ".imageDetails|sort_by(.imagePushedAt)|reverse|.[$MAX_IMAGES:]|.[]|select(.imagePushedAt<$(date +%s)-$MAX_IMAGE_AGE)|.imageDigest")  &&
+        for digest in $old_images; do
+          echo aws ecr batch-delete-image --repository-name test-alex-service-name --image-ids imageDigest=$digest;
+        done
 #artifacts:
 #  files:
 #    - "_tag"
